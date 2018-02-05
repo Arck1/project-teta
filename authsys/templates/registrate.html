@@ -1,0 +1,14 @@
+{% extends 'wrapper.html' %}
+
+{% block content %}
+    {% include 'header.html' %}
+
+    <form action="/auth/registrate/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit">
+    </form>
+
+
+    {% include 'footer.html' %}
+{% endblock %}

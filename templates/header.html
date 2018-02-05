@@ -12,11 +12,11 @@
             </li>
             <li>
                 <a class="nav-link" href="#">
-                    {% if user %}
+                    {% if user.username %}
                         {{ user.username }}
-                        <a class="nav-link" href="#">Выйти</a>
+                        <a class="nav-link" href="/auth/logout/">Выйти</a>
                     {% else %}
-                         <a class="nav-link" href="#">Войти</a>
+                         <a class="nav-link" href="/auth/login/">Войти</a>
                     {% endif %}
 
                     </a>

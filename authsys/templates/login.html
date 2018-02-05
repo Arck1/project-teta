@@ -1,0 +1,15 @@
+{% extends 'wrapper.html' %}
+
+{% block content %}
+    {% include 'header.html' %}
+
+    <form action="/auth/login/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn" type="submit">
+    </form>
+    <button class="btn-info" action="/auth/registrate">Зарегистрироваться</button>
+
+
+    {% include 'footer.html' %}
+{% endblock %}
