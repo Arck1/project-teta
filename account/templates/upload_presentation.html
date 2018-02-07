@@ -1,16 +1,18 @@
 {% extends 'wrapper.html' %}
+
 {% block head %}
-    <title>Login</title>
+    <title>Add presentation</title>
 {% endblock %}
+
 {% block content %}
     {% include 'header.html' %}
+
     <div class="container">
-        <form action="/auth/login/" method="post">
+        <form action="/account/presentations/add/" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input class="btn" type="submit">
         </form>
-        <button class="btn-info" action="/auth/registrate">Зарегистрироваться</button>
     </div>
 
     {% include 'footer.html' %}

@@ -1,0 +1,20 @@
+{% extends 'wrapper.html' %}
+
+{% block head %}
+    <title>presentation</title>
+{% endblock %}
+
+{% block content %}
+    {% include 'header.html' %}
+
+    <div class="container d-flex align-items-center flex-column">
+            <div class="align-self-center">
+                <h2>Название: {{ presentation.name }}</h2>
+                <h3><b>Описание: </b></h3>
+                <p>{{ presentation.description }}</p>
+                <h4>Добавлен: {{ presentation.created }}</h4>
+            </div>
+    </div>
+
+    {% include 'footer.html' %}
+{% endblock %}
