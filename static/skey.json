@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "elite-partition-192510",
+  "private_key_id": "09176c2c01b135dbc8ae58c0f3f55f824d163b42",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDol683yqvU3eID\nLQvLmg81a0WTysR9LHmLDOnfIrPcvxcJvbn8dlp0c3VF22ErBH7GhRD2mZC8ZbFx\nsSr4YCNNdsTptIjGjwZxC7UwBWFLAbxr+EqhfVVORoHv7gpBrujGYBwz75Km9Wpv\nPbVdjWs063P3WD0rWrWQZXWuYi4Jtp2PKvYvRqOqNELM6PRFhQcets48pJlgP+qy\nyyMU8/MupTLBBwM+lEg3INsJQJpe+nwSOT7vxtSLfqvKcNrlgWctxjFuBLqnHziC\nKSYkYWmlF8x7qRaElwA6fJpUTkD0QYJ25AQ84iBvufCY9VqBbLDZI4CHiBMeAmcy\n3hfTpVqfAgMBAAECggEAGQKOdbpWRbpiHiNO3GLBdeYGAkFQZYFNxHTsBPFPU9I8\nYPDEue/kBBeSKaPQS/bcxu3yCAI1PPzWWrpJO5Hi2eaGf/bIqkkg0TEIF5TMhGs4\nXofBRqIadSNBv5HiCnQLVaFqBu+g3lEPU8zX3qphN7yFqLgVQ78qPM+cGtc1yhdj\nWDd5zFkxvHh15+2OakTfvGlG3ZZrVHH3nfdHC3VQmYpeGY19vlDTXC5k4Is/4x1X\n7qdxMoQ7CxecUXNcGAPO4D6at11fTwrvlz9b88pQZ+HSl2ssrW9+ms3aMQdoe88a\n5bmV6hoZ+iTaRAYAH/UBh3OpThXnuZCPxDkXWaoeMQKBgQD3h0Z6wDgkuwgo07B5\nqBM6RFtl0+VaTAGFWj967Krm/u+d+9maLTtgTIeXnh4JRs8cb4M1XBF4vfCFy5uD\nD2AHbsYbc9HQWDah8iQrTR9TqU+wkkXZmXYUd2jaHUCtPnlnwllwAG+WYBqmdgZH\nsLGDkuiQBP+njd48a5iKfulQeQKBgQDwjYxHRh2kLqEZROkN9zxTb6BY8EZQqqD8\nix4FIQsI0CtLnAh9rCeMcYcrjbbXDEgt+djhgl1aX9vWi4FViMGeX3EHjnLBK6Aq\nFPrfoEjx1JzAyyKk5uiKB7g0pig5B1oUNXM7yjuuj67SqOZsEtetIWxtKKamy9El\njhjrypmt1wKBgQDvL2iLdPLLi293BBejdyYdR7CJ1RfrCUbu9SYiQk9ipzYkExlS\nQiL+CvV7LO8ZR7MaZycCiNTZN7ETmIvNOS4yAHiuTlyQVq10D+ejcAK1dQXsOWwF\nuKTBYiGPonS884GdIdAKymEJjhQyhhnLbJIb8fmIMUxZPF1jRRVBvyD1AQKBgQDi\n1/jTNbG6JCbTV4KXIvEGlZuWg28rntyVivNSTujC9Nv/PzNan7/j1yNq1Qb5IKHo\niVYWwwMZuI/tcD0U1hQQL1y9jX114Jf3VzWFMPfY5XC09lrDOuVLVSBGtfH0ZZRy\nvjzew0UoxmJMUe6JN/OfVoeTIOSXIlkmmyuxH6twnQKBgDM8gm/tVTleF2lTBX9E\niMv4FDmbvXwV95EYGqHYQ6veOijNdVrmh1THIoy14R/esF+XiHthNLeLJgvMwM3S\n/6pzZyrBIJBmF8LGyjJ5XX5G0ATTL6ET9ouI1GeukM2fqQRWLqjZS67nK9hWBV5H\njAU/xgBZId1BzB3NVg2f1crF\n-----END PRIVATE KEY-----\n",
+  "client_email": "itmocloud@elite-partition-192510.iam.gserviceaccount.com",
+  "client_id": "104690951009093552635",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/itmocloud%40elite-partition-192510.iam.gserviceaccount.com"
+}

@@ -16,8 +16,6 @@ def login(request):
         else:
             form = AuthenticationForm(request)
 
-
-
     return render(request, 'login.html', locals())
 
 

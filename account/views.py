@@ -1,14 +1,14 @@
+import argparse
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import auth
+
 from account.forms import SlidesForm
 from account.models import Presentation
-import google.auth
-import googleapiclient
-import google.oauth2.credentials
-from google.oauth2 import service_account
-
-
+from google_api.drive import download_and_save_presentation_as_pdf
+from google_api.slides import get_slides
+#
 
 # Create your views here.
 
@@ -16,6 +16,7 @@ from google.oauth2 import service_account
 def account_info(request):
     presentations = Presentation.objects.filter(user=auth.get_user(request))
     return render(request, 'account.html', locals())
+
 
 @login_required
 def presentation_info(request, id=0):
@@ -33,27 +34,24 @@ def presentation_info(request, id=0):
 def add_presentation(request):
     form = SlidesForm(request.GET)
     if request.POST:
-        print(111)
         newslidesform = SlidesForm(request.POST)
         presentation = Presentation(request.POST)
         presentation.name = newslidesform["name"]
         presentation.description = newslidesform["description"]
         presentation.url = newslidesform["url"]
         presentation.user = auth.get_user(request)
-        print(presentation)
         file_url = presentation.url.value()
         start = file_url.find("/d/") + 3
         end = file_url.find("/edit")
         presentation.presentationId = file_url[start:end]
-        download_presentation_as_pdf(presentation.presentationId)
-        # presentation.save()
+        # res = get_slides(presentation.presentationId)
+        # print(res)
+        #pdf_path = download_and_save_presentation_as_pdf(presentation.presentationId)
+        #presentation.pdf = pdf_path
+        #presentation.save()
+        Presentation.objects.create(name=presentation.name,)
         return redirect('/account/')
 
     return render(request, 'upload_presentation.html', locals())
 
 
-def download_presentation_as_pdf(id):
-    #credentials = service_account.Credentials.from_service_account_info()
-
-    print(credentials)
-    print(id)
