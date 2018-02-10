@@ -2,19 +2,71 @@
 
 {% block head %}
     <title>presentation</title>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        stats = "{{ presentation.stat }}";
+
+     google.charts.load('current', {packages: ['corechart']});
+        google.charts.setOnLoadCallback(drawMultSeries);
+
+     function drawMultSeries() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'Slide Number');
+      data.addColumn('number', 'time');
+      vals = JSON.parse(stats);
+      console.log(vals);
+      dat = [];
+      for (var i = 1; i <= vals.length; i++) {
+            dat[i - 1] = [i, vals[i - 1]];
+        }
+      data.addRows(dat);
+
+      var options = {
+        title: 'Slide view statistic',
+        vAxis: {
+          title: 'Time'
+        },
+          legend: 'none',
+          hAxis: { title: 'Slide number'},
+          colors: ['#1c6679'],
+          pointSize: 10
+
+      };
+      var chart = new google.visualization.LineChart(
+        document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+    </script>
 {% endblock %}
 
 {% block content %}
     {% include 'header.html' %}
+    <div>
+        <form action="/account/presentations/{{ presentation.id }}/" method="post">
+            {% csrf_token %}
+            <input type="url" title="link" value="{{ link }}">
+            <input type="submit" name="link" value="Get link">
+        </form>
+    </div>
 
+    <div>
+        <form action="/account/presentations/{{ presentation.id }}/" method="post">
+            {% csrf_token %}
+            <input type="submit" name="status" value="{{ status }}">
+        </form>
+    </div>
     <div class="container d-flex align-items-center flex-column">
             <div class="align-self-center">
                 <h2>Название: {{ presentation.name }}</h2>
                 <h3><b>Описание: </b></h3>
                 <p>{{ presentation.description }}</p>
+                <h4>Прикрепленный файл: {{ presentation.pdf }}</h4>
                 <h4>Добавлен: {{ presentation.created }}</h4>
+                <h4>Изменен: {{ presentation.updated }}</h4>
             </div>
     </div>
-
+     <div id="chart_div" class="container"></div>
     {% include 'footer.html' %}
 {% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'wrapper.html' %}
+
+{% block head %}
+    <title>{{ presentation.name }}</title>
+{% endblock %}
+
+{% block content %}
+    {% include 'header.html' %}
+
+    <div class="container d-flex align-items-center flex-column">
+        <div class="align-self-center">
+            <h2>Название: {{ presentation.name }}</h2>
+            <h3><b>Описание: </b></h3>
+            <p>{{ presentation.description }}</p>
+            <h4>Прикрепленный файл: {{ presentation.pdf }}</h4>
+            <h4>Добавлен: {{ presentation.created }}</h4>
+            <h4>Изменен: {{ presentation.updated }}</h4>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <button id="prev">Previous</button>
+        <button id="next">Next</button>
+        &nbsp; &nbsp;
+        <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+    </div>
+
+    <canvas id="the-canvas"></canvas>
+    {% include 'footer.html' %}
+{% endblock %}

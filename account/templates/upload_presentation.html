@@ -8,7 +8,7 @@
     {% include 'header.html' %}
 
     <div class="container">
-        <form action="/account/presentations/add/" method="post">
+        <form enctype="multipart/form-data" action="/account/presentations/add/" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input class="btn" type="submit">

@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('authsys.urls')),
     path('account/', include('account.urls')),
+    path('show/', include('show.urls')),
     re_path(r'', include('landing.urls'))
 ]

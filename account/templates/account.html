@@ -7,6 +7,8 @@
 {% block content %}
     {% include 'header.html' %}
 
+    <a href="/account/presentations/add/"><button class="btn">Добавить презентацию</button></a>
+
     <div class="container d-flex align-items-center flex-column">
         <h2>Активные презентации</h2>
         {% for presentation in presentations %}

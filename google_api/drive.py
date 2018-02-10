@@ -10,6 +10,7 @@ SCOPES = 'https://www.googleapis.com/auth/drive'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Project_Teta'
 
+
 def download_and_save_presentation_as_pdf(id):
     credentials = get_credentials(SCOPES, CLIENT_SECRET_FILE, APPLICATION_NAME)
     http = credentials.authorize(httplib2.Http())
@@ -30,7 +31,7 @@ def download_and_save_presentation_as_pdf(id):
 
 
 def files_export_media(id, mimeType):
-    credentials = get_credentials()
+    credentials = get_credentials(SCOPES, CLIENT_SECRET_FILE, APPLICATION_NAME)
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('drive', 'v3', http=http)
     request = service.files().export_media(fileId=id, mimeType=mimeType)
@@ -44,7 +45,7 @@ def files_export_media(id, mimeType):
 
 
 def get_metadata(id):
-    credentials = get_credentials()
+    credentials = get_credentials(SCOPES, CLIENT_SECRET_FILE, APPLICATION_NAME)
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('drive', 'v3', http=http)
     request = service.files().get(fileId=id)
