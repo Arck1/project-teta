@@ -1,7 +1,9 @@
-{% extends 'wrapper.html' %}
 
+{% extends 'wrapper.html' %}
+{% load static %}
 {% block head %}
     <title>{{ presentation.name }}</title>
+
 {% endblock %}
 
 {% block content %}
@@ -18,6 +20,8 @@
         </div>
     </div>
     <hr>
+
+
     <div>
         <button id="prev">Previous</button>
         <button id="next">Next</button>
@@ -25,6 +29,13 @@
         <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
     </div>
 
-    <canvas id="the-canvas"></canvas>
+    <canvas id="the-canvas" ></canvas>
     {% include 'footer.html' %}
+
+    <script type="text/javascript">
+        var url = "/{{ presentation.pdf.url }}";
+    </script>
+    <script type="text/javascript" src="{% static 'js/pdf.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+
 {% endblock %}

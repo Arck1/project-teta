@@ -126,3 +126,4 @@ STATIC_URL = '/static/'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = '/auth/login/'
+SERVICE_ACCOUNT_FILE = 'static/json/service_account_key.json'

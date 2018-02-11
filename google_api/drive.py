@@ -1,20 +1,18 @@
+import googleapiclient
 from django.conf import settings
 
 from googleapiclient.http import MediaIoBaseDownload
-import httplib2
+import googleapiclient.discovery
 import io
-from apiclient import discovery
-from google_api.auth import get_credentials
+from google_api.auth import get_service_credentials
 
-SCOPES = 'https://www.googleapis.com/auth/drive'
-CLIENT_SECRET_FILE = 'client_secret.json'
-APPLICATION_NAME = 'Project_Teta'
 
+SCOPES = ['https://www.googleapis.com/auth/drive']
 
 def download_and_save_presentation_as_pdf(id):
-    credentials = get_credentials(SCOPES, CLIENT_SECRET_FILE, APPLICATION_NAME)
-    http = credentials.authorize(httplib2.Http())
-    service = discovery.build('drive', 'v3', http=http)
+    credentials = get_service_credentials(settings.SERVICE_ACCOUNT_FILE, SCOPES)
+
+    service = googleapiclient.discovery.build('drive', 'v3', credentials=credentials)
 
     request = service.files().export_media(fileId=id, mimeType='application/pdf')
     fh = io.BytesIO()
@@ -31,9 +29,8 @@ def download_and_save_presentation_as_pdf(id):
 
 
 def files_export_media(id, mimeType):
-    credentials = get_credentials(SCOPES, CLIENT_SECRET_FILE, APPLICATION_NAME)
-    http = credentials.authorize(httplib2.Http())
-    service = discovery.build('drive', 'v3', http=http)
+    credentials = get_service_credentials(settings.SERVICE_ACCOUNT_FILE, SCOPES)
+    service = googleapiclient.discovery.build('drive', 'v3', credentials=credentials)
     request = service.files().export_media(fileId=id, mimeType=mimeType)
     fh = io.BytesIO()
     downloader = MediaIoBaseDownload(fh, request)
@@ -45,9 +42,8 @@ def files_export_media(id, mimeType):
 
 
 def get_metadata(id):
-    credentials = get_credentials(SCOPES, CLIENT_SECRET_FILE, APPLICATION_NAME)
-    http = credentials.authorize(httplib2.Http())
-    service = discovery.build('drive', 'v3', http=http)
+    credentials = get_service_credentials(settings.SERVICE_ACCOUNT_FILE, SCOPES)
+    service = googleapiclient.discovery.build('drive', 'v3', credentials=credentials)
     request = service.files().get(fileId=id)
     response = request.execute()
     return response
