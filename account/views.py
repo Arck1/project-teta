@@ -6,8 +6,6 @@ from django.contrib import auth
 
 from account.forms import SlidesForm
 from account.models import Presentation
-from google_api.drive import download_and_save_presentation_as_pdf
-from google_api.slides import get_slides
 from google_api.drive import files_export_media
 from project_teta import settings
 import hashlib
@@ -46,6 +44,7 @@ def presentation_info(request, id=0):
             link = "presentation is closed"
             print(link)
             return render(request, 'presentation.html', locals())
+
     if request.POST.get('status'):
         presentation.is_active = not presentation.is_active
         presentation.save()
