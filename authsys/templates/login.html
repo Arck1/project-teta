@@ -1,17 +1,49 @@
 {% extends 'wrapper.html' %}
+{% load staticfiles %}
 {% block head %}
     <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script type="text/javascript" src={% static 'js/index.js' %}></script>
+     <link rel="stylesheet" href="{% static "css/auth_style.css" %}"/>
+    <link rel="stylesheet" href={% static 'css/font-awesome-4.7.0/css/font-awesome.min.css' %}>
+    <!--link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"-->
 {% endblock %}
 {% block content %}
     {% include 'header.html' %}
-    <div class="container">
-        <form action="/auth/login/" method="post">
+    <div class="form-container">
+    <div class="text-center" style="padding:50px 0">
+
+    <section id="login">
+    <div class="container" id="wrapper">
+        <h1>Log in with your username</h1>
+        <form role="form" action="/auth/login/" method="post" id="login-form" autocomplete="off">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input class="btn" type="submit">
+            <div class="form-group">
+                <label for="username" class="sr-only">Username</label>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+            </div>
+            <div class="checkbox pull-left">
+                <span class="character-checkbox" onclick="showPassword()"></span>
+                <span class="label">Show password</span>
+            </div>
+            <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Log in">
         </form>
-        <a href="/auth/registrate"><button class="btn-info">Зарегистрироваться</button></a>
+        <p>new user? <a href="/auth/registrate">create an account</a></p>
+        <hr>
     </div>
+    </div>
+    </section>
+
+
+	<!-- end:Main Form -->
+</div>
+</div>
 
     {% include 'footer.html' %}
 {% endblock %}
