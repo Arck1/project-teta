@@ -23,3 +23,17 @@ class Presentation(models.Model):
             return self.name
         except:
             return self.id
+
+
+class PresentationCopy(models.Model):
+    name = models.CharField(max_length=256, blank=True, null=True, default='Another useless presentation')
+    description = models.TextField(blank=True, null=True, default=None)
+    is_active = models.BooleanField(default=True)
+    hash = models.CharField(max_length=64, blank=True, null=True, default='xyz')
+    origin = models.ForeignKey(Presentation, blank=True, null=True, default=None, on_delete=models.CASCADE)
+
+    def __str__(self):
+        try:
+            return self.name
+        except:
+            return self.id

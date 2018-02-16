@@ -1,4 +1,3 @@
-
 {% extends 'wrapper.html' %}
 {% load static %}
 {% block head %}
@@ -9,27 +8,30 @@
 {% block content %}
     {% include 'header.html' %}
 
-    <div class="container d-flex align-items-center flex-column">
-        <div class="align-self-center">
-            <h2>Название: {{ presentation.name }}</h2>
-            <h3><b>Описание: </b></h3>
-            <p>{{ presentation.description }}</p>
-            <h4>Прикрепленный файл: {{ presentation.pdf }}</h4>
-            <h4>Добавлен: {{ presentation.created }}</h4>
-            <h4>Изменен: {{ presentation.updated }}</h4>
+    {#    <div class="container d-flex align-items-center flex-column">#}
+    {#        <div class="align-self-center">#}
+    {#            <h2>Название: {{ presentation.name }}</h2>#}
+    {#            <h3><b>Описание: </b></h3>#}
+    {#            <p>{{ presentation.description }}</p>#}
+    {#            <h4>Прикрепленный файл: {{ presentation.pdf }}</h4>#}
+    {#            <h4>Добавлен: {{ presentation.created }}</h4>#}
+    {#            <h4>Изменен: {{ presentation.updated }}</h4>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <hr>#}
+
+    <div class="container-fluid d-flex flex-row justify-content-center">
+        <button id="prev" class="btn btn-info align-self-end">Previous</button>
+
+        <div class="d-flex flex-column">
+            <div class="align-self-end">Page: <span id="page_num"></span> / <span id="page_count"></span></div>
+            <canvas id="the-canvas" class="container"></canvas>
         </div>
-    </div>
-    <hr>
 
 
-    <div>
-        <button id="prev">Previous</button>
-        <button id="next">Next</button>
-        &nbsp; &nbsp;
-        <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+        <button id="next" class="btn btn-info align-self-end">Next</button>
     </div>
 
-    <canvas id="the-canvas" ></canvas>
     {% include 'footer.html' %}
 
     <script type="text/javascript">

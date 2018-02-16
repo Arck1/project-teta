@@ -7,32 +7,38 @@
 {% block content %}
     {% include 'header.html' %}
 
-    <a href="/account/presentations/add/"><button class="btn">Добавить презентацию</button></a>
+    <a href="/account/presentations/add/">
+        <button class="btn">Добавить презентацию</button>
+    </a>
+    <h2>Активные презентации</h2><br>
+    <div class="container d-flex align-items-center flex-row flex-wrap">
 
-    <div class="container d-flex align-items-center flex-column">
-        <h2>Активные презентации</h2>
         {% for presentation in presentations %}
             {% if presentation.is_active %}
-            <div class="align-self-center">
-                <h2><a href="/account/presentations/{{ presentation.id }}">Название: {{ presentation.name }}</a></h2>
-                <h3><b>Описание: </b></h3>
-                <p>{{ presentation.description }}</p>
-
-            </div>
-            <hr/>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ presentation.name }}</h5>
+                        <p class="card-text">{{ presentation.description }}</p>
+                        <a href="/account/presentations/{{ presentation.id }}" class="card-link">Open</a>
+                    </div>
+                </div>
             {% endif %}
         {% endfor %}
-        <hr/>
+
+    </div>
+    <hr/>
         <h2>Закрытые презентации</h2>
+    <div class="container d-flex align-items-center flex-row flex-wrap">
+
         {% for presentation in presentations %}
             {% if not presentation.is_active %}
-            <div class="align-self-center">
-                <h2><a href="/account/presentations/{{ presentation.id }}">Название: {{ presentation.name }}</a></h2>
-                <h3><b>Описание: </b></h3>
-                <p>{{ presentation.description }}</p>
-
-            </div>
-            <hr/>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ presentation.name }}</h5>
+                        <p class="card-text">{{ presentation.description }}</p>
+                        <a href="/account/presentations/{{ presentation.id }}" class="card-link">Open</a>
+                    </div>
+                </div>
             {% endif %}
         {% endfor %}
     </div>

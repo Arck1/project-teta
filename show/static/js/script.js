@@ -4,8 +4,8 @@ var pdfDoc = null,
     pageNum = 1,
     pageRendering = false,
     pageNumPending = null,
-    scale = 1,
     canvas = document.getElementById('the-canvas'),
+    scale = 1,
     ctx = canvas.getContext('2d');
 /**
  * Get page info from document, resize canvas accordingly, and render page.
@@ -86,4 +86,10 @@ PDFJS.getDocument(url).then(function(pdfDoc_) {
 
   // Initial/first page rendering
   renderPage(pageNum);
+});
+
+$(function () {
+  $('#the-canvas').click(function () {
+      onNextPage();
+  });
 });

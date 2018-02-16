@@ -34,4 +34,6 @@ def registrate(request):
             newuser = auth.authenticate(username=newuser_form.cleaned_data['username'], password=newuser_form.cleaned_data['password2'])
             auth.login(request, newuser)
             return redirect('/')
+        else:
+            form = UserCreationForm(request.POST)
     return render(request, 'registrate.html', locals())
