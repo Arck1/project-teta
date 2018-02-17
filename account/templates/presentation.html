@@ -2,54 +2,48 @@
 
 {% block head %}
     <title>presentation</title>
-    <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        stats = "{{ presentation.stat }}";
-
-     google.charts.load('current', {packages: ['corechart']});
-        google.charts.setOnLoadCallback(drawMultSeries);
-
-     function drawMultSeries() {
-      var data = new google.visualization.DataTable();
-      data.addColumn('number', 'Slide Number');
-      data.addColumn('number', 'time');
-      vals = JSON.parse(stats);
-      console.log(vals);
-      dat = [];
-      for (var i = 1; i <= vals.length; i++) {
-            dat[i - 1] = [i, vals[i - 1]];
-        }
-      data.addRows(dat);
-
-      var options = {
-        title: 'Slide view statistic',
-        vAxis: {
-          title: 'Time'
-        },
-          legend: 'none',
-          hAxis: { title: 'Slide number'},
-          colors: ['#1c6679'],
-          pointSize: 10
-
-      };
-      var chart = new google.visualization.LineChart(
-        document.getElementById('chart_div'));
-
-      chart.draw(data, options);
-    }
-    </script>
+    {#    <!--Load the AJAX API-->#}
+    {#    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>#}
+    {#    <script type="text/javascript">#}
+    {#        stats = "{{ presentation.stat }}";#}
+    {##}
+    {#     google.charts.load('current', {packages: ['corechart']});#}
+    {#        google.charts.setOnLoadCallback(drawMultSeries);#}
+    {##}
+    {#     function drawMultSeries() {#}
+    {#      var data = new google.visualization.DataTable();#}
+    {#      data.addColumn('number', 'Slide Number');#}
+    {#      data.addColumn('number', 'time');#}
+    {#      vals = JSON.parse(stats);#}
+    {#      console.log(vals);#}
+    {#      dat = [];#}
+    {#      for (var i = 1; i <= vals.length; i++) {#}
+    {#            dat[i - 1] = [i, vals[i - 1]];#}
+    {#        }#}
+    {#      data.addRows(dat);#}
+    {##}
+    {#      var options = {#}
+    {#        title: 'Slide view statistic',#}
+    {#        vAxis: {#}
+    {#          title: 'Time'#}
+    {#        },#}
+    {#          legend: 'none',#}
+    {#          hAxis: { title: 'Slide number'},#}
+    {#          colors: ['#1c6679'],#}
+    {#          pointSize: 10#}
+    {##}
+    {#      };#}
+    {#      var chart = new google.visualization.LineChart(#}
+    {#        document.getElementById('chart_div'));#}
+    {##}
+    {#      chart.draw(data, options);#}
+    {#    }#}
+    {#    </script>#}
 {% endblock %}
 
 {% block content %}
     {% include 'header.html' %}
-    <div>
-        <form action="/account/presentations/{{ presentation.id }}/" method="post">
-            {% csrf_token %}
-            <input type="url" title="link" value="{{ link }}">
-            <input type="submit" name="link" value="Get link">
-        </form>
-    </div>
+
 
     <div>
         <form action="/account/presentations/{{ presentation.id }}/" method="post">
@@ -57,16 +51,55 @@
             <input type="submit" name="status" value="{{ status }}">
         </form>
     </div>
+
     <div class="container d-flex align-items-center flex-column">
-            <div class="align-self-center">
-                <h2>Название: {{ presentation.name }}</h2>
-                <h3><b>Описание: </b></h3>
-                <p>{{ presentation.description }}</p>
-                <h4>Прикрепленный файл: {{ presentation.pdf }}</h4>
-                <h4>Добавлен: {{ presentation.created }}</h4>
-                <h4>Изменен: {{ presentation.updated }}</h4>
-            </div>
+        <div class="align-self-center">
+            <h2>Название: {{ presentation.name }}</h2>
+            <h3><b>Описание: </b></h3>
+            <p>{{ presentation.description }}</p>
+            <h4>Прикрепленный файл: {{ presentation.pdf }}</h4>
+            <h4>Добавлен: {{ presentation.created }}</h4>
+            <h4>Изменен: {{ presentation.updated }}</h4>
+        </div>
     </div>
-     <div id="chart_div" class="container"></div>
+    <hr>
+    <h2>Копии</h2>
+    <div class="container d-flex align-items-center flex-column flex-wrap">
+
+        {% for copy in copys %}
+            {% if copy.is_active %}
+                <div class="card text-center container">
+                    <div class="card-header">
+                        {{ copy.name }}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">{{ copy.description }}</p>
+
+                        <div>
+                            <form action="/account/presentations/{{ presentation.id }}/" method="post">
+                                {% csrf_token %}
+                                <input type="text" value="{{ copy.id }}" hidden = "hidden">
+                                <input type="url" title="link" value="{{ link }}">
+                                <input type="submit" name="link" value="Get link">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        {% if copy.last_view is None %}
+                            {{ copy.last_view }}
+                        {% else %}
+                            {{ copy.last_view }}
+                        {% endif %}
+
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <hr>
+
+
+    {#     <div id="chart_div" class="container"></div>#}
     {% include 'footer.html' %}
 {% endblock %}

@@ -18,6 +18,7 @@ class Presentation(models.Model):
     hash = models.CharField(max_length=64, blank=True, null=True, default='xyz')
 
     stat = models.TextField(blank=True, null=True, default='[]')
+
     def __str__(self):
         try:
             return self.name
@@ -31,6 +32,7 @@ class PresentationCopy(models.Model):
     is_active = models.BooleanField(default=True)
     hash = models.CharField(max_length=64, blank=True, null=True, default='xyz')
     origin = models.ForeignKey(Presentation, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    last_view = models.DateTimeField(blank=True, null=True, default=None)
 
     def __str__(self):
         try:

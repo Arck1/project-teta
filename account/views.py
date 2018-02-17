@@ -5,11 +5,12 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 
 from account.forms import SlidesForm
-from account.models import Presentation
+from account.models import Presentation, PresentationCopy
 from google_api.drive import files_export_media
 from project_teta import settings
 import hashlib
 from django.core.files import File
+
 
 #
 
@@ -28,6 +29,8 @@ def presentation_info(request, id=0):
     if id <= 0:
         return redirect('/account/presentations/')
     presentation = Presentation.objects.get(id=id)
+    copys = PresentationCopy.objects.filter(origin=presentation)
+
     status = ""
     if presentation.is_active:
         status = "Close"
@@ -36,14 +39,7 @@ def presentation_info(request, id=0):
 
     if presentation is None:
         return redirect('/account/presentations/')
-    if request.POST.get('link'):
-        if presentation.is_active:
-            link = "http://127.0.0.1:8000/show/%d/%s/" % (presentation.id, presentation.hash)
-            return render(request, 'presentation.html', locals())
-        else:
-            link = "presentation is closed"
-            print(link)
-            return render(request, 'presentation.html', locals())
+
 
     if request.POST.get('status'):
         presentation.is_active = not presentation.is_active
@@ -54,6 +50,11 @@ def presentation_info(request, id=0):
             status = "Open"
     link = ""
     return render(request, 'presentation.html', locals())
+
+@login_required
+def get_show_url(request):
+    data = request
+
 
 
 @login_required
