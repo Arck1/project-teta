@@ -68,6 +68,7 @@ TEMPLATES = [
             ],
         },
     },
+
 ]
 
 WSGI_APPLICATION = 'project_teta.wsgi.application'

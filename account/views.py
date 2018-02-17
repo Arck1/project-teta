@@ -1,6 +1,10 @@
 import re
 
+import time
+from distutils.command import register
+
 from django.contrib.auth.decorators import login_required
+
 from django.shortcuts import render, redirect
 from django.contrib import auth
 
@@ -10,8 +14,23 @@ from google_api.drive import files_export_media
 from project_teta import settings
 import hashlib
 from django.core.files import File
+from django.template.defaulttags import register
+import urllib
+import json
 
 
+@register.filter
+def get_item0(dictionary, key):
+    val = dictionary.get(key)
+    if val:
+        return int(val[0])
+    return 0
+@register.filter
+def get_item1(dictionary, key):
+    val = dictionary.get(key)
+    if val:
+        return int(val[1])
+    return 0
 #
 
 # Create your views here.
@@ -29,7 +48,6 @@ def presentation_info(request, id=0):
     if id <= 0:
         return redirect('/account/presentations/')
     presentation = Presentation.objects.get(id=id)
-    copys = PresentationCopy.objects.filter(origin=presentation)
 
     status = ""
     if presentation.is_active:
@@ -40,7 +58,6 @@ def presentation_info(request, id=0):
     if presentation is None:
         return redirect('/account/presentations/')
 
-
     if request.POST.get('status'):
         presentation.is_active = not presentation.is_active
         presentation.save()
@@ -49,12 +66,43 @@ def presentation_info(request, id=0):
         else:
             status = "Open"
     link = ""
+
+    if request.POST.get('add_link'):
+        pcopy = PresentationCopy()
+        pcopy.origin = presentation
+        pcopy.name = request.POST['name']
+        magic = pcopy.name + str(time.time())
+        pcopy.hash = hashlib.md5(magic.encode()).hexdigest()
+        pcopy.save()
+
+    if request.POST.get('delete'):
+        idc = request.POST['copy_id']
+        obj = PresentationCopy.objects.get(id=idc)
+        PresentationCopy.delete(obj)
+
+    api_url = 'https://api-metrika.yandex.ru/stat/v1/data?'
+    counter_id = "id=47725444"
+    metrics = '&metrics=ym:pv:pageviews,ym:pv:users'
+    dimensions = '&dimensions=ym:pv:URLPath'
+    auth_token = '&oauth_token=AQAAAAAOGSvpAATQtPCjgBAfGU1wobj5hSPXApg'
+    filter_url = '&filters=ym:pv:URLPath=~%27/show/' + str(presentation.id) + '/[0-9]%2B/*%27'
+    request_url = api_url + counter_id + metrics + dimensions + filter_url + auth_token
+    print(request_url)
+    f = urllib.request.urlopen(request_url)
+    ans = f.read()
+    json_ans = json.loads(ans)
+    data = json_ans['data']
+
+    view_stat = {}
+
+    for item in data:
+        path = item['dimensions'][0]['name'].strip().split('/')
+        view_stat[int(path[3])] = item['metrics']
+
+    print(view_stat)
+
+    copys = PresentationCopy.objects.filter(origin=presentation)
     return render(request, 'presentation.html', locals())
-
-@login_required
-def get_show_url(request):
-    data = request
-
 
 
 @login_required
@@ -97,3 +145,5 @@ def add_presentation(request):
             form = SlidesForm(request.POST)
 
     return render(request, 'upload_presentation.html', locals())
+
+
