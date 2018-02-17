@@ -45,61 +45,84 @@
     {% include 'header.html' %}
 
 
-    <div>
-        <form action="/account/presentations/{{ presentation.id }}/" method="post">
-            {% csrf_token %}
-            <input type="submit" name="status" value="{{ status }}">
-        </form>
-    </div>
 
-    <div class="container d-flex align-items-center flex-column">
-        <div class="align-self-center">
-            <h2>Название: {{ presentation.name }}</h2>
-            <h3><b>Описание: </b></h3>
-            <p>{{ presentation.description }}</p>
-            <h4>Прикрепленный файл: {{ presentation.pdf }}</h4>
-            <h4>Добавлен: {{ presentation.created }}</h4>
-            <h4>Изменен: {{ presentation.updated }}</h4>
-        </div>
-    </div>
-    <hr>
-    <h2>Копии</h2>
-    <div class="container d-flex align-items-center flex-column flex-wrap">
-
+{#==============================================================================#}
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">All</a>
+        </li>
         {% for copy in copys %}
             {% if copy.is_active %}
-                <div class="card text-center container">
-                    <div class="card-header">
-                        {{ copy.name }}
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">{{ copy.description }}</p>
+                <li class="nav-item">
+                    <a class="nav-link" id="{{ copy.name }}-tab" data-toggle="tab" href="#{{ copy.name }}" role="tab" aria-controls="{{ copy.name }}" aria-selected="false">{{ copy.name }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        <li class="nav-item">
+            <a class="nav-link" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="false">+</a>
+        </li>
+    </ul>
 
-                        <div>
-                            <form action="/account/presentations/{{ presentation.id }}/" method="post">
-                                {% csrf_token %}
-                                <input type="text" value="{{ copy.id }}" hidden = "hidden">
-                                <input type="url" title="link" value="{{ link }}">
-                                <input type="submit" name="link" value="Get link">
-                            </form>
+    <div class="tab-content">
+        <div class="tab-pane active" id="all" role="tabpanel" aria-labelledby="all-tab">
+            <div>
+                <form action="/account/presentations/{{ presentation.id }}/" method="post">
+                    {% csrf_token %}
+                    <input type="submit" name="status" value="{{ status }}">
+                </form>
+            </div>
+            <div class="container d-flex align-items-center flex-column">
+                <div class="align-self-center">
+                    <h2>Название: {{ presentation.name }}</h2>
+                    <h3><b>Описание: </b></h3>
+                    <p>{{ presentation.description }}</p>
+                    <h4>Прикрепленный файл: {{ presentation.pdf }}</h4>
+                    <h4>Добавлен: {{ presentation.created }}</h4>
+                    <h4>Изменен: {{ presentation.updated }}</h4>
+                </div>
+            </div>
+            <div id="chart_div" class="container"></div>
+        </div>
+        {% for copy in copys %}
+            {% if copy.is_active %}
+                <div class="tab-pane" id="{{ copy.name }}" role="tabpanel" aria-labelledby="{{ copy.name }}-tab">
+                    <div>
+                        <form action="/account/presentations/{{ presentation.id }}/" method="post">
+                            {% csrf_token %}
+                            <input type="submit" name="status" value="{{ status }}">
+                        </form>
+                    </div>
+                    <div class="container d-flex align-items-center flex-column">
+                        <div class="align-self-center">
+                            <h2>Название: {{ copy.name }}</h2>
+                            <h3><b>Описание: </b></h3>
+                            <p>{{ copy.description }}</p>
                         </div>
                     </div>
-                    <div class="card-footer text-muted">
-                        {% if copy.last_view is None %}
-                            {{ copy.last_view }}
-                        {% else %}
-                            {{ copy.last_view }}
-                        {% endif %}
-
-                    </div>
+                    <div id="chart_div" class="container"></div>
                 </div>
             {% endif %}
         {% endfor %}
+        <div class="tab-pane" id="add" role="tabpanel" aria-labelledby="add-tab">
+            <form action="/account/presentations/{{ presentation.id }}/" method="post">
+                {% csrf_token %}
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Link Name</span>
+                    </div>
+                    <input id="name" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <input type="url" title="link" value="{{ link }}">
+                <input type="submit" name="link" value="Get link">
+            </form>
+        </div>
     </div>
-    <hr>
 
-
+<script>
+  $(function () {
+    $('#myTab li:last-child a').tab('show')
+  })
+</script>
     {#     <div id="chart_div" class="container"></div>#}
     {% include 'footer.html' %}
 {% endblock %}
